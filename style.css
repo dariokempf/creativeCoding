@@ -8,6 +8,7 @@
 /* Global styles */
 body {
   font-family: Arial, sans-serif;
+  background-color: black;
 }
 
 .container {
@@ -107,8 +108,10 @@ body {
   padding: 10px 20px;
   border-radius: 10px;
   border-color: red;
+  border-style:inset;
   display: inline-block;
   margin-top: 5vh;
-  width: 2000px;
+  margin-bottom: 5vh;
+  width: 1500px;
   text-align: center;
 }

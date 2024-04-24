@@ -16,9 +16,9 @@ function setup() {
     y.push(sin(angle * i) * initRadius);
   }
 
-  stroke(0, 75);
-  strokeWeight(0.5);
-  background(255);
+  stroke(255, 0, 0, 75);
+  strokeWeight(3);
+  background(0);
   noFill();
 }
 
