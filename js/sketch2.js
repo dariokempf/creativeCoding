@@ -3,7 +3,7 @@ let originalPixels;
 
 function preload() {
   // Lade ein Bild vorab
-  img = loadImage('cat.jpg');
+  img = loadImage('../cat.jpg');
 }
 
 function setup() {
