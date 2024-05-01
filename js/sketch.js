@@ -16,7 +16,7 @@ createCanvas(400, 400);
 }
 
 function draw() {
-    background('black');
+    background('white');
 
     for (let i = 0; i < rectangles.length; i++) {
         let rectData = rectangles[i];
