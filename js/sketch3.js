@@ -3,7 +3,7 @@ let scaleFactor = 1.0; // Initial scale factor
 
 function preload() {
   // Load the image
-  img = loadImage('image.jpg');
+  img = loadImage('cat.jpg');
 }
 
 function setup() {

@@ -115,3 +115,26 @@ body {
   width: 1500px;
   text-align: center;
 }
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #911680;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 200px; /* Festlegen der Breite */
+  height: 50px; /* Festlegen der Höhe */
+  line-height: 50px; /* Zentrieren des Textes vertikal */
+  margin: 10px; /* Abstand zwischen den Buttons */
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: #ee37ff;
+  height: 60px; /* Ändere die Höhe beim Hover */
+  line-height: 60px; /* Passe auch die Zeilenhöhe an */
+  width: 200px; /* Ändere die Breite beim Hover */
+}
