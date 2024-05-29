@@ -14,31 +14,26 @@
     
 </head>
 <body>
-  <nav class="navbar">
-    <div class="container">
-      <ul class="navbar-menu">
-        <li class="left"><a href="../index.html">Start</a></li>
-        <li><a href="../categorys/day1.html">Tag 1</a></li>
-        <li><a href="../categorys/day2.html">Tag 2</a></li>
-        <li><a href="../categorys/day3.html">Tag 3</a></li>
-        <li><a href="../categorys/day4.html">Tag 4</a></li>
-        <li><a href="../categorys/day5.html">Tag 5</a></li>
-        <li><a href="../categorys/day6.html">Tag 6</a></li>
-        <li><a href="../categorys/day7.html">Tag 7</a></li>
-        <li><a href="../categorys/day8.html">Tag 8</a></li>
-      </ul>
-      <button class="navbar-toggle" aria-label="Toggle navigation">
-        <span class="navbar-toggle-icon"></span>
-      </button>
-    </div>
-  </nav>
+
+  <div id="navigation"></div>
+  <script>
+    // Lade die Navigation über JavaScript
+    window.onload = function() {
+      fetch('../navigation/navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('navigation').innerHTML = html;
+        });
+    };
+  </script>
 
   <div class="content">
-    <center><h1 class="special-heading">Tag 5</h1></center>
+    <center><h1 class="special-heading">Tag 3</h1></center>
 
-    <center><li><a href="../Tasks/5.1.html">MarkovChain</a></li></center>
-    <center><li><a href="../Tasks/5.2.1.html">Wordcloud</a></li></center>
-    <center><li><a href="../Tasks/5.2.2.html">Shakespeare Cloud</a></li></center>
+    <center><a href="../Tasks/5.1.html" class="button">MarkovChain</a></center>
+    <center><a href="../Tasks/5.2.1.html" class="button">Wordcloud</a></center>
+    <center><a href="../Tasks/5.2.2.html" class="button">Shakespeare Cloud</a></center>
   </div>
+
 </body>
 </html>

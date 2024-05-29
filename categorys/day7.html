@@ -14,31 +14,23 @@
     
 </head>
 <body>
-  <nav class="navbar">
-    <div class="container">
-      <ul class="navbar-menu">
-        <li class="left"><a href="../index.html">Start</a></li>
-        <li><a href="../categorys/day1.html">Tag 1</a></li>
-        <li><a href="../categorys/day2.html">Tag 2</a></li>
-        <li><a href="../categorys/day3.html">Tag 3</a></li>
-        <li><a href="../categorys/day4.html">Tag 4</a></li>
-        <li><a href="../categorys/day5.html">Tag 5</a></li>
-        <li><a href="../categorys/day6.html">Tag 6</a></li>
-        <li><a href="../categorys/day7.html">Tag 7</a></li>
-        <li><a href="../categorys/day8.html">Tag 8</a></li>
-    </ul>
-      <button class="navbar-toggle" aria-label="Toggle navigation">
-        <span class="navbar-toggle-icon"></span>
-      </button>
-    </div>
-  </nav>
+  <div id="navigation"></div>
+  <script>
+    // Lade die Navigation über JavaScript
+    window.onload = function() {
+      fetch('../navigation/navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('navigation').innerHTML = html;
+        });
+    };
+  </script>
 
   <div class="content">
-    <center><h1 class="special-heading">Tag 7</h1></center>
+    <center><h1 class="special-heading">Project</h1></center>
 
-    <center><li><a href=""></a></li></center>
-    <center><li><a href=""></a></li></center>
-    <center><li><a href=""></a></li></center>
+    <center><a href="../js/game.js" class="button">Aim Trainer</a></center>
+    <center><a href="" class="button">Game Of Life OnClick</a></center>
   </div>
 </body>
 </html>

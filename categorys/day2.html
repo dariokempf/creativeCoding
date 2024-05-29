@@ -13,33 +13,30 @@
     <script src="/libraries/quicksettings.js"></script>
 
 </head>
+
 <body>
-  <nav class="navbar">
-    <div class="container">
-      <ul class="navbar-menu">
-        <li class="left"><a href="../index.html">Start</a></li>
-        <li><a href="../categorys/day1.html">Tag 1</a></li>
-        <li><a href="../categorys/day2.html">Tag 2</a></li>
-        <li><a href="../categorys/day3.html">Tag 3</a></li>
-        <li><a href="../categorys/day4.html">Tag 4</a></li>
-        <li><a href="../categorys/day5.html">Tag 5</a></li>
-        <li><a href="../categorys/day6.html">Tag 6</a></li>
-        <li><a href="../categorys/day7.html">Tag 7</a></li>
-        <li><a href="../categorys/day8.html">Tag 8</a></li>
-      </ul>
-      <button class="navbar-toggle" aria-label="Toggle navigation">
-        <span class="navbar-toggle-icon"></span>
-      </button>
-    </div>
-  </nav>
+  <!-- Hier wird die Navigation eingefügt -->
+  <div id="navigation"></div>
 
   <div class="content">
-    <center><h1 class="special-heading">Tag 2</h1></center>
-
-    <center><li><a href="../Tasks/2.1.html">Image Size editor</a></li></center>
-    <center><li><a href="../Tasks/2.2.html">Image manipulation load</a></li></center>
-    <center><li><a href="../Tasks/2.3.html">Image Dithering</a></li></center>
-    <center><li><a href="../Tasks/2.4.html">Image Color Sort</a></li></center>
+    <center><h1 class="special-heading">Tag 1</h1></center>
+    
+    <center><a href="../Tasks/2.1.html" class="button">Image Size editor</a></center>
+    <center><a href="../Tasks/2.2.html" class="button">Image manipulation</a></center>
+    <center><a href="../Tasks/2.3.html" class="button">Image Dithering</a></center>
+    <center><a href="../Tasks/2.4.html" class="button">Image Color Sort</a></center>
+    
   </div>
-</body>
+
+  <script>
+    // Lade die Navigation über JavaScript
+    window.onload = function() {
+      fetch('../navigation/navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('navigation').innerHTML = html;
+        });
+    };
+  </script>
+
 </html>
