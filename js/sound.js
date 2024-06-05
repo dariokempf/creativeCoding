@@ -1,101 +1,98 @@
-/*
-Code for Codecademy Live: Creative Coding, Session 8
-
-p5.sound.js References: https://p5js.org/reference/#/libraries/p5.sound
-Music from: https://freemusicarchive.org/music/Jahzzar/Travellers_Guide/Siesta
-*/
-
-let sound;
-let amp;
+let song;
 let fft;
+let particles = [];
+let flying = false;
 
-let spectrumX = 0;
-let spectrumY = 0;
-
-let spectrumSpeed = 2;
-
-let skyLayer;
-
-// Load sound file before setup() function runs
-function preload(){
-  // Load the sound file saved as "siesta.mp3"
-  sound = loadSound('siesta.mp3');
+function preload() {
+  song = loadSound('../mp3/song.mp3');
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-
-  // Loop sound file
-  sound.loop();
-  
-  // Create an instance of the Amplitude object
-  amp = new p5.Amplitude();
-
-  // Create an instance of the FFT object
+  createCanvas(windowWidth, 1200);
+  angleMode(DEGREES);
   fft = new p5.FFT();
-  
-  // Create a graphics layer 
-  // createGraphics() reference - https://p5js.org/reference/#/p5/createGraphics
-  skyLayer = createGraphics(width, height);
-
-  skyLayer.colorMode(HSB, 360, 100, 100, 100);
-  colorMode(HSB, 360, 100, 100, 100);
+  noFill(); // Standardlinie für den Sound deaktivieren
 }
 
 function draw() {
-  background(0, 0, 0, 15);
-  skyLayer.background(0, 0, 0, 2);
+  background(0); // Hintergrundfarbe zu Schwarz ändern
+  stroke(255);
+  strokeWeight(3);
+  noFill();
+  
+  translate(width / 2, height / 2);
+  
+  fft.analyze();
+  let amp = fft.getEnergy(20, 200);
 
-  // Get waveform and spectrum arrays
-  let waveform = fft.waveform();
-  let spectrum = fft.analyze();
-
-  // Increment x position of spectrum by 2 pixels every frame
-  spectrumX += spectrumSpeed;
-  // Use Perlin noise to move y position of spectrum
-  spectrumY = noise(frameCount * 0.001) * height / 2;
-
-  // Bounce spectrum back and forth horizontally
-  if(spectrumX > width || spectrumX < 0){
-    spectrumSpeed *= -1;
+  if (flying) {
+    particles.push(new Particle());
   }
 
-  for(let i = 0; i < spectrum.length; i++){
-    // Map spectrum, originally between 0 - 255 to a new range between 0 and height / 2
-    let spectrumHeight = map(spectrum[i], 0, 255, 0, height / 2);
-
-    // Map hue based on spectrum
-    let h = map(spectrum[i], 0, 255, 0, 360);
-    // Draw spectrum to skyLayer graphics
-    skyLayer.strokeWeight(0.1);
-    skyLayer.stroke(int(h), 100, 100, 10);
-    skyLayer.line(spectrumX, spectrumY, spectrumX, spectrumY - spectrumHeight);
-  }
-
-  // Draw skyLayer graphics to canvas using image() function
-  image(skyLayer, 0, 0);
-
-  for (let i = 0; i < waveform.length; i += 10) {
-    // Map waveform of each frequency bin across width of canvas
-    let x = map(i, 0, waveform.length, -25, width + 25);
-    // Map wavefore freqeuncy to y position of rectangle
-    let y = map(waveform[i] * 2, -1, 1, height / 2 + 100, height / 2 + 200);
-
-    // Map hue based on waveform between 200 and 240
-    let h = map(waveform[i], -1, 1, 200, 240);
-    noStroke();
-    fill(int(h), 100, 100, 15);
-    // Create rounded rectangle with fifth argument
-    rect(x, y, 50, height / 2, 25);
-  }
-
-  // Draw stars if amplitude is above 0.18
-  if(amp.getLevel() > 0.18){
-    // Draw 10 ellipses in random location with random width and height
-    for(let i = 0; i < 10; i++){
-      fill(0, 0, 100, random(20, 80));
-      ellipse(random(width), random(0, height / 4 * 3), random(3, 5), random(3, 5));
+  for (let t = -1; t <= 1; t += 2) {
+    beginShape(); // Beginne die Form
+    for (let i = 0; i <= 360; i += 0.5) { // Änderung: Bis 360 Grad gehen
+      let index = floor(map(i, 0, 360, 0, width - 1));
+      let r = map(fft.waveform()[index], -1, 1, 150, 350);
+      let x = r * sin(i) * t;
+      let y = r * cos(i);
+      vertex(x, y); // Füge die Eckpunkte hinzu
     }
+    endShape(); // Änderung: Kreis schließen
+  }
 
+  for (let i = particles.length - 1; i >= 0; i--) {
+    if (!particles[i].edges()) {
+      particles[i].update(amp > 230);
+      particles[i].show();
+    } else {
+      particles.splice(i, 1);
+    }
+  }
+}
+
+function mouseClicked() {
+  if (song.isPlaying()) {
+    song.pause();
+    noLoop();
+  } else {
+    song.play();
+    loop();
+    flying = true;
+  }
+}
+
+class Particle {
+  constructor() {
+    this.pos = p5.Vector.random2D().mult(255); // Zufällige Position auf der Kreisbahn
+    this.vel = createVector(0, 0); // Zufällige Geschwindigkeit
+    this.acc = this.pos.copy().mult(random(0.0001, 0.00001)); // Anfangsbeschleunigung ist Null
+    this.w = random(3, 5); // Zufällige Größe des Partikels
+    this.color = [random(200, 255), random(200, 255), random(200, 255)];
+  }
+
+  update(cond) {
+    this.vel.add(this.acc);
+    this.pos.add(this.vel);
+    if (cond) {
+      this.pos.add(this.vel);
+      this.pos.add(this.vel);
+      this.pos.add(this.vel);
+    }
+  }
+
+  edges() {
+    return (
+      this.pos.x < -width / 2 ||
+      this.pos.x > width / 2 ||
+      this.pos.y < -height / 2 ||
+      this.pos.y > height / 2
+    );
+  }
+
+  show() {
+    noStroke();
+    fill(this.color);
+    ellipse(this.pos.x, this.pos.y, this.w);
   }
 }
