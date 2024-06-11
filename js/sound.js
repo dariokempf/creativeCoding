@@ -4,7 +4,7 @@ let particles = [];
 let flying = false;
 
 function preload() {
-  song = loadSound('../mp3/song.mp3');
+  song = loadSound('../mp3/goofy ahh uncle compilation.mp3');
 }
 
 function setup() {
